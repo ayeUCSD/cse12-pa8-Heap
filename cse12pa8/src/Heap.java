@@ -15,13 +15,13 @@ public class Heap<K, V> {
     
     public void add(K k, V v){
         entries.add(new Entry<K,V>(k, v));
-        bubbleUp(entries.size());
+        bubbleUp(entries.size()-1);
 
     }
     
     public Entry<K, V> poll(){
-        swap(0,size());
-        Entry<K,V> output = entries.remove(size());
+        swap(0,size()-1);
+        Entry<K,V> output = entries.remove(size()-1);
         bubbleDown(0);
         return output;
     }
@@ -36,7 +36,7 @@ public class Heap<K, V> {
         return entries;
     }
 
-    public public boolean isEmpty(){
+    public boolean isEmpty(){
         return entries.isEmpty();
     }
 
@@ -66,6 +66,7 @@ public class Heap<K, V> {
 
     public void bubbleUp(int index){
         int parentIndex = parent(index);
+        //if parent is more priority than me
         if(comparator.compare(entries.get(parentIndex).getKey(), entries.get(index).getKey()) < 0){
             swap(parentIndex, index);
             bubbleUp(parentIndex);
@@ -89,7 +90,7 @@ public class Heap<K, V> {
         try{
             Entry<K,V> e1 = entries.get(index1);
             Entry<K,V> e2 = entries.get(index2);
-            return ( comparator.compare(e1.getKey(), e2.getKey()) > 0 );
+            return ( comparator.compare(e1.getKey(), e2.getKey()) < 0 );
 
         }catch(Exception E){
             return false;
