@@ -26,7 +26,6 @@ public class Heap<K, V> {
         return output;
     }
 
-    //TODO
     public Entry<K, V> peek() throws NoSuchElementException{
         if(size() == 0){throw new NoSuchElementException("Size was zero");}
         return entries.get(0);
@@ -67,7 +66,7 @@ public class Heap<K, V> {
     public void bubbleUp(int index){
         int parentIndex = parent(index);
         //if parent is more priority than me
-        if(comparator.compare(entries.get(parentIndex).getKey(), entries.get(index).getKey()) < 0){
+        if(existsAndGreater(index, parentIndex)){
             swap(parentIndex, index);
             bubbleUp(parentIndex);
         }
@@ -78,9 +77,10 @@ public class Heap<K, V> {
         int rChild = right(index);
         if(existsAndGreater(lChild, rChild)){
             swap(index,lChild);
-        }
-        else if(existsAndGreater(rChild, lChild)){
+            bubbleDown(lChild);
+        }else if(existsAndGreater(rChild, lChild)){
             swap(index, rChild);
+            bubbleDown(rChild);
         }
 
 
@@ -90,7 +90,7 @@ public class Heap<K, V> {
         try{
             Entry<K,V> e1 = entries.get(index1);
             Entry<K,V> e2 = entries.get(index2);
-            return ( comparator.compare(e1.getKey(), e2.getKey()) < 0 );
+            return ( comparator.compare(e1.getKey(), e2.getKey()) > 0 );
 
         }catch(Exception E){
             return false;

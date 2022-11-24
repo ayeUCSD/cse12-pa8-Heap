@@ -53,6 +53,7 @@ public class HeapTest {
 		heap.add(2, "");
 		System.out.println(heap.toString());
 		assertEquals(50, (int)heap.poll().getKey());
+		System.out.println(heap.toString());
 		
 	}
 
